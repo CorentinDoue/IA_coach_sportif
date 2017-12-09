@@ -13,6 +13,8 @@ public class Activite {
 
     private int temporisation;
 
+    private int poids;
+
     private int note;
 
     @ManyToOne
@@ -59,5 +61,13 @@ public class Activite {
 
     public void setTemporisation(int temporisation) {
         this.temporisation = temporisation;
+    }
+
+    public void setPoids(int poids) {
+        this.poids = poids;
+    }
+
+    public int getPoids() {
+        return poids;
     }
 }

@@ -25,6 +25,8 @@ public class Exercice {
 
     private boolean repetition;
 
+    private boolean poids;
+
 
     public Exercice(){}
 
@@ -82,5 +84,13 @@ public class Exercice {
 
     public boolean isRepetition() {
         return repetition;
+    }
+
+    public boolean isPoids() {
+        return poids;
+    }
+
+    public void setPoids(boolean poids) {
+        this.poids = poids;
     }
 }
