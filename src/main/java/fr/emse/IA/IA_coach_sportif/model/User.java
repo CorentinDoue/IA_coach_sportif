@@ -2,6 +2,7 @@
 package fr.emse.IA.IA_coach_sportif.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @SuppressWarnings("serial")
@@ -31,11 +32,11 @@ public class User {
     @Column(nullable = false)
     private boolean admin;
 
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Caracteristique> histo_caracteristiques;
-//
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Seance> histo_seance;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Caracteristique> histo_caracteristiques;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Seance> histo_seance;
 
     @SuppressWarnings("unused")
     public User() {
@@ -90,21 +91,21 @@ public class User {
         this.password = password;
     }
 
-//    public List<Caracteristique> getHisto_caracteristiques() {
-//        return histo_caracteristiques;
-//    }
-//
-//    public List<Seance> getHisto_seance() {
-//        return histo_seance;
-//    }
-//
-//    public void setHisto_caracteristiques(List<Caracteristique> histo_caracteristiques) {
-//        this.histo_caracteristiques = histo_caracteristiques;
-//    }
-//
-//    public void setHisto_seance(List<Seance> histo_seance) {
-//        this.histo_seance = histo_seance;
-//    }
+    public List<Caracteristique> getHisto_caracteristiques() {
+        return histo_caracteristiques;
+    }
+
+    public List<Seance> getHisto_seance() {
+        return histo_seance;
+    }
+
+    public void setHisto_caracteristiques(List<Caracteristique> histo_caracteristiques) {
+        this.histo_caracteristiques = histo_caracteristiques;
+    }
+
+    public void setHisto_seance(List<Seance> histo_seance) {
+        this.histo_seance = histo_seance;
+    }
 }
 
 
