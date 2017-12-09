@@ -7,8 +7,11 @@ import javax.persistence.*;
 @SuppressWarnings("serial")
 public class User {
 
+    private static final String USER_GENERATOR = "UserGenerator";
+
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = USER_GENERATOR, sequenceName = "GUSER_SEQ", initialValue = 2, allocationSize = 1)
+    @GeneratedValue(generator = USER_GENERATOR)
     private Long id;
 
     @Column(nullable = false)
@@ -18,23 +21,26 @@ public class User {
     private String prenom;
 
     @Column(nullable = false)
-    private String pseudo;
+    private String login;
 
     @Column(nullable = false)
-    private String mail;
+    private String password;
 
 
+
+    @Column(nullable = false)
+    private boolean admin;
+
+//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Caracteristique> histo_caracteristiques;
+//
+//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Seance> histo_seance;
 
     @SuppressWarnings("unused")
     public User() {
     }
 
-    public User(String nom, String prenom, String pseudo, String mail) {
-        this.nom = nom;
-        this.prenom = prenom;
-        this.pseudo = pseudo;
-        this.mail = mail;
-    }
 
     public Long getId() {
         return id;
@@ -42,14 +48,6 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
     }
 
     public String getNom() {
@@ -68,15 +66,45 @@ public class User {
         this.prenom = prenom;
     }
 
-    public String getPseudo() {
-        return pseudo;
+    public String getLogin() {
+        return login;
     }
 
-    public void setPseudo(String pseudo) {
-        this.pseudo = pseudo;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
+    public boolean isAdmin() {
+        return admin;
+    }
 
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+//    public List<Caracteristique> getHisto_caracteristiques() {
+//        return histo_caracteristiques;
+//    }
+//
+//    public List<Seance> getHisto_seance() {
+//        return histo_seance;
+//    }
+//
+//    public void setHisto_caracteristiques(List<Caracteristique> histo_caracteristiques) {
+//        this.histo_caracteristiques = histo_caracteristiques;
+//    }
+//
+//    public void setHisto_seance(List<Seance> histo_seance) {
+//        this.histo_seance = histo_seance;
+//    }
 }
 
 

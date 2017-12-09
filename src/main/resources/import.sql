@@ -1,0 +1,1 @@
+INSERT INTO user (id, nom, prenom, login, password, admin) VALUES (1, 'Doué', 'Corentin', 'corentin.doue','xLSCW9R2Orr35PwpQu3ov2eclC0PsWtMobCUF/mCw7M/Fnfx6EGBmg==',1);
