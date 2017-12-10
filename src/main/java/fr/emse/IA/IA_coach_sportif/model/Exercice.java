@@ -10,13 +10,13 @@ public class Exercice {
     @GeneratedValue
     private Long id;
 
-    private String name;
+    private String nom;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Note_muscle> muscles;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Muscles muscles;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Materiel> materiels;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Materiels materiels;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Description> description;
@@ -38,23 +38,23 @@ public class Exercice {
         this.id = id;
     }
 
-    public void setMuscles(List<Note_muscle> muscles) {
-        this.muscles = muscles;
-    }
-
-    public List<Note_muscle> getMuscles() {
+    public Muscles getMuscles() {
         return muscles;
     }
 
-    public String getName() {
-        return name;
+    public void setMuscles(Muscles muscles) {
+        this.muscles = muscles;
+    }
+
+    public String getNom() {
+        return nom;
     }
 
     public int getDifficulte() {
         return difficulte;
     }
 
-    public List<Materiel> getMateriels() {
+    public Materiels getMateriels() {
         return materiels;
     }
 
@@ -62,12 +62,12 @@ public class Exercice {
         this.difficulte = difficulte;
     }
 
-    public void setMateriels(List<Materiel> materiels) {
+    public void setMateriels(Materiels materiels) {
         this.materiels = materiels;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     public List<Description> getDescription() {

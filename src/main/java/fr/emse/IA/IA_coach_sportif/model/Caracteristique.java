@@ -5,7 +5,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @SuppressWarnings("serial")
@@ -22,8 +21,8 @@ public class Caracteristique {
     @DateTimeFormat
     private Date date;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Note_muscle> muscles;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Muscles muscles;
 
 
 
@@ -52,7 +51,7 @@ public class Caracteristique {
         return taille;
     }
 
-    public List<Note_muscle> getMuscles() {
+    public Muscles getMuscles() {
         return muscles;
     }
 
@@ -60,7 +59,7 @@ public class Caracteristique {
         this.date = date;
     }
 
-    public void setMuscles (List<Note_muscle> muscles) {
+    public void setMuscles (Muscles muscles) {
         this.muscles = muscles;
     }
 
