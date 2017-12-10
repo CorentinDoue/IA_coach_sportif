@@ -8,23 +8,26 @@ import fr.emse.IA.IA_coach_sportif.model.Sexe;
  * Command passed to create or update a user
  * @author JB Nizet
  */
-public final class UserCommandDTO {
+public final class UserCommandCaracteristiqueDTO {
 
     private final String login;
     private final boolean admin;
     private final String password;
     private final Sexe sexe;
+    private final CaracteristiqueCommandDTO caracteristique;
 
     @JsonCreator
-    public UserCommandDTO(@JsonProperty("login") String login,
-                          @JsonProperty("admin") boolean admin,
-                          @JsonProperty("sexe") Sexe sexe,
-                          @JsonProperty("password") String password
-                          ) {
+    public UserCommandCaracteristiqueDTO(@JsonProperty("login") String login,
+                                         @JsonProperty("admin") boolean admin,
+                                         @JsonProperty("sexe") Sexe sexe,
+                                         @JsonProperty("password") String password,
+                                         @JsonProperty("caracteristique") CaracteristiqueCommandDTO caracteristique
+                                        ) {
         this.login = login;
         this.password = password;
         this.admin = admin;
         this.sexe = sexe;
+        this.caracteristique = caracteristique;
     }
 
 
@@ -42,5 +45,9 @@ public final class UserCommandDTO {
 
     public String getPassword() {
         return password;
+    }
+
+    public CaracteristiqueCommandDTO getCaracteristique() {
+        return caracteristique;
     }
 }

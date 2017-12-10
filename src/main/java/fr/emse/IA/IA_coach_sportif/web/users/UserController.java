@@ -1,6 +1,7 @@
 package fr.emse.IA.IA_coach_sportif.web.users;
 
 import fr.emse.IA.IA_coach_sportif.dao.UserDao;
+import fr.emse.IA.IA_coach_sportif.model.Caracteristique;
 import fr.emse.IA.IA_coach_sportif.model.User;
 import fr.emse.IA.IA_coach_sportif.web.exception.BadRequestException;
 import fr.emse.IA.IA_coach_sportif.web.exception.ErrorCode;
@@ -12,6 +13,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -81,6 +84,23 @@ public class UserController {
         return new UserDTO(user);
     }
 
+    @PostMapping("/newCaracteristique")
+    @ResponseStatus(HttpStatus.CREATED)
+    //@AdminOnly
+    public UserDTO createCaracteristique(@Validated @RequestBody UserCommandCaracteristiqueDTO command) {
+        if (userDao.existsByLogin(command.getLogin())) {
+            throw new BadRequestException(ErrorCode.USER_LOGIN_ALREADY_EXISTS);
+        }
+        User user = new User();
+        copyCommandToUser(command, user);
+
+        user.setPassword(passwordDigester.hash(command.getPassword()));
+
+        userDao.save(user);
+
+        return new UserDTO(user);
+    }
+
     @PutMapping("/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     //@AdminOnly
@@ -116,14 +136,26 @@ public class UserController {
     private void copyCommandToUser(UserDTO command, User user) {
         user.setLogin(command.getLogin());
         user.setAdmin(command.isAdmin());
-        user.setNom(command.getNom());
-        user.setPrenom(command.getPrenom());
+        user.setSexe(command.getSexe());
     }
 
     private void copyCommandToUser(UserCommandDTO command, User user) {
         user.setLogin(command.getLogin());
         user.setAdmin(command.isAdmin());
-        user.setNom(command.getNom());
-        user.setPrenom(command.getPrenom());
+        user.setSexe(command.getSexe());
+    }
+
+    private void copyCommandToUser(UserCommandCaracteristiqueDTO command, User user) {
+        user.setLogin(command.getLogin());
+        user.setAdmin(command.isAdmin());
+        user.setSexe(command.getSexe());
+        Caracteristique caracteristique = new Caracteristique();
+        caracteristique.setAge(command.getCaracteristique().getAge());
+        caracteristique.setPoids(command.getCaracteristique().getPoids());
+        caracteristique.setTaille(command.getCaracteristique().getPoids());
+        caracteristique.setDate(new Date());
+        List<Caracteristique> caracteristiques =new ArrayList<>();
+        caracteristiques.add(caracteristique);
+        user.setHisto_caracteristiques(caracteristiques);
     }
 }

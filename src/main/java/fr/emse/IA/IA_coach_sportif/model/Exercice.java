@@ -6,8 +6,11 @@ import java.util.List;
 @Entity
 public class Exercice {
 
+    private static final String EXERCICE_GENERATOR = "ExerciceGenerator";
+
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = EXERCICE_GENERATOR, sequenceName = "EXERCICE_SEQ", initialValue = 61, allocationSize = 1)
+    @GeneratedValue(generator = EXERCICE_GENERATOR)
     private Long id;
 
     private String nom;

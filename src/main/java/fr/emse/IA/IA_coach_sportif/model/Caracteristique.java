@@ -18,6 +18,8 @@ public class Caracteristique {
 
     private Long poids;
 
+    private Long age;
+
     @DateTimeFormat
     private Date date;
 
@@ -69,6 +71,14 @@ public class Caracteristique {
 
     public void setTaille(Long taille) {
         this.taille = taille;
+    }
+
+    public Long getAge() {
+        return age;
+    }
+
+    public void setAge(Long age) {
+        this.age = age;
     }
 }
 
