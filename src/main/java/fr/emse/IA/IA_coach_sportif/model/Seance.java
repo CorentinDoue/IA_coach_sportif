@@ -53,6 +53,14 @@ public class Seance {
     public void setNote(int note) {
         this.note = note;
     }
+
+    public List<Activite> getActivites() {
+        return activites;
+    }
+
+    public void setActivites(List<Activite> activites) {
+        this.activites = activites;
+    }
 }
 
 
