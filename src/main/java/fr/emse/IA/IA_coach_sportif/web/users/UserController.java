@@ -6,7 +6,9 @@ import fr.emse.IA.IA_coach_sportif.model.User;
 import fr.emse.IA.IA_coach_sportif.web.exception.BadRequestException;
 import fr.emse.IA.IA_coach_sportif.web.exception.ErrorCode;
 import fr.emse.IA.IA_coach_sportif.web.exception.NotFoundException;
+import fr.emse.IA.IA_coach_sportif.web.security.AuthenticatedUserDTO;
 import fr.emse.IA.IA_coach_sportif.web.security.CurrentUser;
+import fr.emse.IA.IA_coach_sportif.web.security.JwtHelper;
 import fr.emse.IA.IA_coach_sportif.web.security.PasswordDigester;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -31,15 +33,18 @@ public class UserController {
     private final UserDao userDao;
     private final PasswordGenerator passwordGenerator;
     private final PasswordDigester passwordDigester;
+    private final JwtHelper jwtHelper;
 
     public UserController(CurrentUser currentUser,
                           UserDao userDao,
                           PasswordGenerator passwordGenerator,
-                          PasswordDigester passwordDigester) {
+                          PasswordDigester passwordDigester,
+                          JwtHelper jwtHelper) {
         this.currentUser = currentUser;
         this.userDao = userDao;
         this.passwordGenerator = passwordGenerator;
         this.passwordDigester = passwordDigester;
+        this.jwtHelper = jwtHelper;
     }
 
     @GetMapping("/me")
@@ -67,10 +72,11 @@ public class UserController {
         return userDao.findById(userId).map(UserDTO::new).orElseThrow(NotFoundException::new);
     }
 
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     //@AdminOnly
-    public UserDTO create(@Validated @RequestBody UserCommandDTO command) {
+    public AuthenticatedUserDTO create(@Validated @RequestBody UserCommandCaracteristiqueDTO command) {
         if (userDao.existsByLogin(command.getLogin())) {
             throw new BadRequestException(ErrorCode.USER_LOGIN_ALREADY_EXISTS);
         }
@@ -81,24 +87,7 @@ public class UserController {
 
         userDao.save(user);
 
-        return new UserDTO(user);
-    }
-
-    @PostMapping("/newCaracteristique")
-    @ResponseStatus(HttpStatus.CREATED)
-    //@AdminOnly
-    public UserDTO createCaracteristique(@Validated @RequestBody UserCommandCaracteristiqueDTO command) {
-        if (userDao.existsByLogin(command.getLogin())) {
-            throw new BadRequestException(ErrorCode.USER_LOGIN_ALREADY_EXISTS);
-        }
-        User user = new User();
-        copyCommandToUser(command, user);
-
-        user.setPassword(passwordDigester.hash(command.getPassword()));
-
-        userDao.save(user);
-
-        return new UserDTO(user);
+        return new AuthenticatedUserDTO(user, jwtHelper.buildToken(user.getId()));
     }
 
     @PutMapping("/{userId}")
@@ -134,13 +123,6 @@ public class UserController {
     }
 
     private void copyCommandToUser(UserDTO command, User user) {
-        user.setLogin(command.getLogin());
-        user.setAdmin(command.isAdmin());
-        user.setSexe(command.getSexe());
-        user.setDate_naissance(command.getDate_naissance());
-    }
-
-    private void copyCommandToUser(UserCommandDTO command, User user) {
         user.setLogin(command.getLogin());
         user.setAdmin(command.isAdmin());
         user.setSexe(command.getSexe());
