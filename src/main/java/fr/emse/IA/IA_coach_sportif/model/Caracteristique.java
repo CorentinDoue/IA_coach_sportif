@@ -14,11 +14,9 @@ public class Caracteristique {
     @GeneratedValue
     private Long id;
 
-    private Long taille;
+    private int taille;
 
-    private Long poids;
-
-    private Long age;
+    private int poids;
 
     @DateTimeFormat
     private Date date;
@@ -45,11 +43,11 @@ public class Caracteristique {
         return date;
     }
 
-    public Long getPoids() {
+    public int getPoids() {
         return poids;
     }
 
-    public Long getTaille() {
+    public int getTaille() {
         return taille;
     }
 
@@ -65,21 +63,14 @@ public class Caracteristique {
         this.muscles = muscles;
     }
 
-    public void setPoids(Long poids) {
+    public void setPoids(int poids) {
         this.poids = poids;
     }
 
-    public void setTaille(Long taille) {
+    public void setTaille(int taille) {
         this.taille = taille;
     }
 
-    public Long getAge() {
-        return age;
-    }
-
-    public void setAge(Long age) {
-        this.age = age;
-    }
 }
 
 

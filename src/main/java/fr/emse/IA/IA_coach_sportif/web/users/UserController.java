@@ -137,20 +137,22 @@ public class UserController {
         user.setLogin(command.getLogin());
         user.setAdmin(command.isAdmin());
         user.setSexe(command.getSexe());
+        user.setDate_naissance(command.getDate_naissance());
     }
 
     private void copyCommandToUser(UserCommandDTO command, User user) {
         user.setLogin(command.getLogin());
         user.setAdmin(command.isAdmin());
         user.setSexe(command.getSexe());
+        user.setDate_naissance(command.getDate_naissance());
     }
 
     private void copyCommandToUser(UserCommandCaracteristiqueDTO command, User user) {
         user.setLogin(command.getLogin());
         user.setAdmin(command.isAdmin());
         user.setSexe(command.getSexe());
+        user.setDate_naissance(command.getDate_naissance());
         Caracteristique caracteristique = new Caracteristique();
-        caracteristique.setAge(command.getCaracteristique().getAge());
         caracteristique.setPoids(command.getCaracteristique().getPoids());
         caracteristique.setTaille(command.getCaracteristique().getPoids());
         caracteristique.setDate(new Date());

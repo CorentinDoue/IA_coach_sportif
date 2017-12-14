@@ -1,8 +1,11 @@
 
 package fr.emse.IA.IA_coach_sportif.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -26,6 +29,9 @@ public class User {
     @NotNull
     @Enumerated(EnumType.STRING)
     private Sexe sexe;
+
+    @DateTimeFormat
+    private Date date_naissance;
 
     @Column(nullable = false)
     private boolean admin;
@@ -96,6 +102,14 @@ public class User {
 
     public void setSexe(Sexe sexe) {
         this.sexe = sexe;
+    }
+
+    public Date getDate_naissance() {
+        return date_naissance;
+    }
+
+    public void setDate_naissance(Date date_naissance) {
+        this.date_naissance = date_naissance;
     }
 }
 
