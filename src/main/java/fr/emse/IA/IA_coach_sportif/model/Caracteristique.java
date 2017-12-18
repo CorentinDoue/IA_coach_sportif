@@ -10,8 +10,11 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class Caracteristique {
 
+    private static final String CARACTERISTIQUES_GENERATOR = "CaracteriqtiquesGenerator";
+
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = CARACTERISTIQUES_GENERATOR, sequenceName = "CARACTERISTIQUES_SEQ", initialValue = 23, allocationSize = 1)
+    @GeneratedValue(generator = CARACTERISTIQUES_GENERATOR)
     private Long id;
 
     private int taille;

@@ -76,7 +76,7 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     //@AdminOnly
-    public AuthenticatedUserDTO create(@Validated @RequestBody UserCommandCaracteristiqueDTO command) {
+    public AuthenticatedUserDTO create(@Validated @RequestBody UserCommandCaracteristiqueDTO command) throws BadRequestException {
         if (userDao.existsByLogin(command.getLogin())) {
             throw new BadRequestException(ErrorCode.USER_LOGIN_ALREADY_EXISTS);
         }

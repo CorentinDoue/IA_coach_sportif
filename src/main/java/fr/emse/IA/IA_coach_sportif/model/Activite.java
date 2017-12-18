@@ -5,8 +5,11 @@ import javax.persistence.*;
 @Entity
 public class Activite {
 
+    private static final String ACTIVITE_GENERATOR = "ActiviteGenerator";
+
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = ACTIVITE_GENERATOR, sequenceName = "ACTIVITE_SEQ", initialValue = 2, allocationSize = 1)
+    @GeneratedValue(generator = ACTIVITE_GENERATOR)
     private Long id;
 
     private int repetition;
@@ -20,7 +23,18 @@ public class Activite {
     @ManyToOne
     private Exercice exercice;
 
-    public Activite(){}
+    public Activite() {
+
+    }
+
+    public Activite copy(){
+        Activite activite = new Activite();
+        activite.setExercice(this.getExercice());
+        activite.setTemporisation(this.getTemporisation());
+        activite.setPoids(this.getPoids());
+        activite.setRepetition(this.getRepetition());
+        return activite;
+    }
 
     public void setNote(int note) {
         this.note = note;
@@ -38,7 +52,6 @@ public class Activite {
         return id;
     }
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     public Exercice getExercice() {
         return exercice;
     }

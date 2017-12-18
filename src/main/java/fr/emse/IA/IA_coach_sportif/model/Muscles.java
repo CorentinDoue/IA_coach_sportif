@@ -4,13 +4,17 @@ package fr.emse.IA.IA_coach_sportif.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 @SuppressWarnings("serial")
 public class Muscles {
 
+    private static final String MUSCLES_GENERATOR = "MusclesGenerator";
+
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = MUSCLES_GENERATOR, sequenceName = "MUSCLES_SEQ", initialValue = 61, allocationSize = 1)
+    @GeneratedValue(generator = MUSCLES_GENERATOR)
     private Long id;
     private int biceps;
     private int	triceps;

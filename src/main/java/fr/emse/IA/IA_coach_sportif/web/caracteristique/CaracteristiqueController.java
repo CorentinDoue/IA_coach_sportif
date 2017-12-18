@@ -2,13 +2,13 @@ package fr.emse.IA.IA_coach_sportif.web.caracteristique;
 
 import fr.emse.IA.IA_coach_sportif.dao.CaracteristiqueDao;
 import fr.emse.IA.IA_coach_sportif.dao.UserDao;
+import fr.emse.IA.IA_coach_sportif.model.Caracteristique;
 import fr.emse.IA.IA_coach_sportif.model.User;
 import fr.emse.IA.IA_coach_sportif.web.exception.NotFoundException;
 import fr.emse.IA.IA_coach_sportif.web.security.CurrentUser;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -55,5 +55,15 @@ public class CaracteristiqueController {
         User user = userDao.findById(userId).orElseThrow(NotFoundException::new);
         List<CaracteristiqueDTO> histo = user.getHisto_caracteristiques()== null ? null: user.getHisto_caracteristiques().stream().map(CaracteristiqueDTO::new).collect(Collectors.toList());
         return histo;
+    }
+
+    @PostMapping("/{userId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    //@AdminOnly
+    public void add(@PathVariable("userId") Long userId, @Validated @RequestBody Caracteristique caracteristique) {
+        User user = userDao.findById(userId).orElseThrow(() -> new NotFoundException("No user with ID " + userId));
+        List<Caracteristique> caracteristiques = user.getHisto_caracteristiques();
+        caracteristiques.add(caracteristique);
+        user.setHisto_caracteristiques(caracteristiques);
     }
 }

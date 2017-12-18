@@ -11,8 +11,11 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class Seance {
 
+    private static final String SEANCE_GENERATOR = "SeanceGenerator";
+
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = SEANCE_GENERATOR, sequenceName = "SEANCE_SEQ", initialValue = 2, allocationSize = 1)
+    @GeneratedValue(generator = SEANCE_GENERATOR)
     private Long id;
 
     private int note;
