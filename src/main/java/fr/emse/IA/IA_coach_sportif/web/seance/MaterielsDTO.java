@@ -10,11 +10,11 @@ public final class MaterielsDTO {
     private final boolean barreTraction;
     private final boolean elastique;
     private final boolean poulie;
-    private final boolean autre;
+    private final boolean cordeSaute;
 
     public MaterielsDTO(Materiels materiels) {
         this.id = materiels.getId();
-        this.autre = materiels.isAutre();
+        this.cordeSaute = materiels.isCordeSaute();
         this.barre = materiels.isBarre();
         this.barreEZ = materiels.isBarreEZ();
         this.barreTraction = materiels.isBarreTraction();
@@ -51,7 +51,7 @@ public final class MaterielsDTO {
         return barre;
     }
 
-    public boolean isAutre() {
-        return autre;
+    public boolean isCordeSaute() {
+        return cordeSaute;
     }
 }

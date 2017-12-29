@@ -42,6 +42,14 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Seance> histo_seance;
 
+    @Enumerated(EnumType.STRING)
+    private Objectif objectif;
+
+    private Double niveau;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Materiels materiels;
+
     @SuppressWarnings("unused")
     public User() {
     }
@@ -110,6 +118,30 @@ public class User {
 
     public void setDate_naissance(Date date_naissance) {
         this.date_naissance = date_naissance;
+    }
+
+    public Objectif getObjectif() {
+        return objectif;
+    }
+
+    public void setObjectif(Objectif objectif) {
+        this.objectif = objectif;
+    }
+
+    public Double getNiveau() {
+        return niveau;
+    }
+
+    public void setNiveau(Double niveau) {
+        this.niveau = niveau;
+    }
+
+    public Materiels getMateriels() {
+        return materiels;
+    }
+
+    public void setMateriels(Materiels materiels) {
+        this.materiels = materiels;
     }
 }
 

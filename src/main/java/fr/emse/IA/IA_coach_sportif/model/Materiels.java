@@ -1,6 +1,8 @@
 package fr.emse.IA.IA_coach_sportif.model;
 
 
+import fr.emse.IA.IA_coach_sportif.web.users.UserMaterielsDTO;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,10 +19,20 @@ public class Materiels {
     private boolean	barreTraction;
     private boolean	elastique;
     private boolean	poulie;
-    private boolean	autre;
+    private boolean cordeSaute;
 
 
     public Materiels(){}
+
+    public Materiels(UserMaterielsDTO userMaterielsDTO){
+        halteres = userMaterielsDTO.isHalteres();
+        barre = userMaterielsDTO.isBarre();
+        barreEZ = userMaterielsDTO.isBarreEZ();
+        barreTraction = userMaterielsDTO.isBarreTraction();
+        elastique = userMaterielsDTO.isElastique();
+        poulie = userMaterielsDTO.isPoulie();
+        cordeSaute = userMaterielsDTO.isCordeSaute();
+    }
 
 
     public void setId(Long id) {
@@ -31,8 +43,8 @@ public class Materiels {
         return id;
     }
 
-    public boolean isAutre() {
-        return autre;
+    public boolean isCordeSaute() {
+        return cordeSaute;
     }
 
     public boolean isBarre() {
@@ -59,8 +71,8 @@ public class Materiels {
         return poulie;
     }
 
-    public void setAutre(boolean autre) {
-        this.autre = autre;
+    public void setCordeSaute(boolean cordeSaute) {
+        this.cordeSaute = cordeSaute;
     }
 
     public void setBarre(boolean barre) {

@@ -2,10 +2,13 @@ package fr.emse.IA.IA_coach_sportif.web.users;
 
 import fr.emse.IA.IA_coach_sportif.dao.UserDao;
 import fr.emse.IA.IA_coach_sportif.model.Caracteristique;
+import fr.emse.IA.IA_coach_sportif.model.Materiels;
+import fr.emse.IA.IA_coach_sportif.model.Objectif;
 import fr.emse.IA.IA_coach_sportif.model.User;
 import fr.emse.IA.IA_coach_sportif.web.exception.BadRequestException;
 import fr.emse.IA.IA_coach_sportif.web.exception.ErrorCode;
 import fr.emse.IA.IA_coach_sportif.web.exception.NotFoundException;
+import fr.emse.IA.IA_coach_sportif.web.seance.MaterielsDTO;
 import fr.emse.IA.IA_coach_sportif.web.security.AuthenticatedUserDTO;
 import fr.emse.IA.IA_coach_sportif.web.security.CurrentUser;
 import fr.emse.IA.IA_coach_sportif.web.security.JwtHelper;
@@ -107,9 +110,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     //@AdminOnly
     public void delete(@PathVariable("userId") Long userId) {
-        userDao.findById(userId).ifPresent(user -> {
-            userDao.delete(user);
-        });
+        userDao.findById(userId).ifPresent(userDao::delete);
     }
 
     @PostMapping("/{userId}/password-resets")
@@ -120,6 +121,94 @@ public class UserController {
         String generatedPassword = passwordGenerator.generatePassword();
         user.setPassword(passwordDigester.hash(generatedPassword));
         return new UserWithPasswordDTO(user, generatedPassword);
+    }
+
+    @PutMapping("/me/objectif")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void changeObjectif(@Validated @RequestBody Objectif objectif) {
+        User user = userDao.findById(currentUser.getUserId()).orElseThrow(NotFoundException::new);
+        user.setObjectif(objectif);
+    }
+
+    @GetMapping("/me/objectif")
+    public Objectif getObjectif() {
+        User user = userDao.findById(currentUser.getUserId()).orElseThrow(NotFoundException::new);
+        return user.getObjectif();
+    }
+
+    @PutMapping("/{userId}/objectif")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    //@AdminOnly
+    public void changeObjectif(@PathVariable("userId") Long userId, @Validated @RequestBody Objectif objectif) {
+        User user = userDao.findById(userId).orElseThrow(NotFoundException::new);
+        user.setObjectif(objectif);
+    }
+
+    @GetMapping("/{userId}/objectif")
+    //@AdminOnly
+    public Objectif getObjectif(@PathVariable("userId") Long userId) {
+        User user = userDao.findById(userId).orElseThrow(NotFoundException::new);
+        return user.getObjectif();
+    }
+
+    @PutMapping("/me/niveau")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void changeNiveau(@Validated @RequestBody Double niveau) {
+        User user = userDao.findById(currentUser.getUserId()).orElseThrow(NotFoundException::new);
+        user.setNiveau(niveau);
+    }
+
+    @GetMapping("/me/niveau")
+    public Double getNiveau() {
+        User user = userDao.findById(currentUser.getUserId()).orElseThrow(NotFoundException::new);
+        return user.getNiveau();
+    }
+
+    @PutMapping("/{userId}/niveau")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    //@AdminOnly
+    public void changeNiveau(@PathVariable("userId") Long userId, @Validated @RequestBody Double niveau) {
+        User user = userDao.findById(userId).orElseThrow(NotFoundException::new);
+        user.setNiveau(niveau);
+    }
+
+    @GetMapping("/{userId}/niveau")
+    //@AdminOnly
+    public Double getNiveau(@PathVariable("userId") Long userId) {
+        User user = userDao.findById(userId).orElseThrow(NotFoundException::new);
+        return user.getNiveau();
+    }
+
+    @PutMapping("/me/materiels")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void changeMateriels(@Validated @RequestBody UserMaterielsDTO userMaterielsDTO) {
+        User user = userDao.findById(currentUser.getUserId()).orElseThrow(NotFoundException::new);
+        Materiels materiels = new Materiels(userMaterielsDTO);
+        user.setMateriels(materiels);
+    }
+
+    @GetMapping("/me/materiels")
+    public MaterielsDTO getMateriels() {
+        User user = userDao.findById(currentUser.getUserId()).orElseThrow(NotFoundException::new);
+        Materiels materiels = user.getMateriels();
+        return new MaterielsDTO(materiels);
+    }
+
+    @PutMapping("/{userId}/materiels")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    //@AdminOnly
+    public void changeMateriels(@PathVariable("userId") Long userId, @Validated @RequestBody UserMaterielsDTO userMaterielsDTO) {
+        User user = userDao.findById(userId).orElseThrow(NotFoundException::new);
+        Materiels materiels = new Materiels(userMaterielsDTO);
+        user.setMateriels(materiels);
+    }
+
+    @GetMapping("/{userId}/materiels")
+    //@AdminOnly
+    public MaterielsDTO getMateriels(@PathVariable("userId") Long userId) {
+        User user = userDao.findById(userId).orElseThrow(NotFoundException::new);
+        Materiels materiels = user.getMateriels();
+        return new MaterielsDTO(materiels);
     }
 
     private void copyCommandToUser(UserDTO command, User user) {

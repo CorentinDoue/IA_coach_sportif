@@ -1,6 +1,7 @@
 buildscript {
 	ext {
 		springBootVersion = '1.5.8.RELEASE'
+		droolsVersion = '7.5.0.Final'
 	}
 	repositories {
 		mavenCentral()
@@ -27,6 +28,8 @@ repositories {
 
 
 dependencies {
+	compile "org.kie:kie-api:${droolsVersion}"
+	compile "org.drools:drools-compiler:${droolsVersion}"
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile 'mysql:mysql-connector-java'
 	compile 'io.jsonwebtoken:jjwt:0.7.0'
